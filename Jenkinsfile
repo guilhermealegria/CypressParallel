@@ -5,8 +5,11 @@ pipeline {
     stages { 
         stage('Build') { 
             steps { 
-                sh 'npm ci'
-             } 
+                nodejs(nodeJSInstallationName: 'nodejs22'){
+                    sh 'npm -v'
+                    sh 'npm ci'
+                }
+            } 
         } 
         stage('Test') { 
             steps { 
