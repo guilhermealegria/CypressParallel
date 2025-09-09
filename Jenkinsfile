@@ -12,8 +12,10 @@ pipeline {
             } 
         } 
         stage('Test') { 
-            steps { 
-                sh 'npm run cy:parallel'
+            steps {
+                nodejs(nodeJSInstallationName: 'nodejs22'){ 
+                    sh 'npm run cy:parallel'
+                }
              } 
         } 
     } 
