@@ -1,5 +1,10 @@
 {
+  "scripts": {
+    "test": "cypress run",
+    "cy:parallel": "npx cypress run --env split=true"
+  },
   "devDependencies": {
-    "cypress": "^15.1.0"
+    "cypress": "^15.1.0",
+    "cypress-split": "^1.24.21"
   }
 }

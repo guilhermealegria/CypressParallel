@@ -4,10 +4,14 @@ pipeline {
     agent any 
     stages { 
         stage('Build') { 
-            steps { echo 'Hello World' } 
+            steps { 
+                sh 'npm ci'
+             } 
         } 
         stage('Test') { 
-            steps { echo 'Hello World' } 
+            steps { 
+                sh 'npm run cy:parallel'
+             } 
         } 
     } 
 }
