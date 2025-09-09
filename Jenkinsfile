@@ -1,22 +1,39 @@
 import groovy.json.JsonOutput
 
 pipeline { 
-    agent any 
+    agent {
+        docker {
+            image 'cypress/base'
+            args '--network jenkinsdocker_skynet'
+        }
+    }
+
     stages { 
         stage('Build') { 
             steps { 
-                nodejs(nodeJSInstallationName: 'nodejs22'){
-                    sh 'npm -v'
-                    sh 'npm ci'
-                }
+                sh 'npm -v'
+                sh 'npm ci'
             } 
         } 
-        stage('Test') { 
-            steps {
-                nodejs(nodeJSInstallationName: 'nodejs22'){ 
-                    sh 'npm run cy:parallel'
-                }
-             } 
+        stage('Test parellel') { 
+            environment {
+                CYPRESS_trashAssetsBeforeRuns = 'false'
+            }
+            parallel{
+                stage('Run One'){
+                    steps {
+                        echo "Running build ${env.BUILD_ID}"
+                        sh 'npm run cy:parallel'
+                    }
+                } 
+                stage('Run Two'){
+                    steps {
+                        echo "Running build ${env.BUILD_ID}"
+                        sh 'npm run cy:parallel:two'
+                    }
+                } 
+            }
+            
         } 
     } 
 }
