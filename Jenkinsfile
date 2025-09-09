@@ -3,7 +3,7 @@ import groovy.json.JsonOutput
 pipeline { 
     agent {
         docker {
-            image 'cypress/browsers:latest'
+            image 'cypress/base:22.19.0'
             args '--network jenkinsdocker_skynet'
         }
     }
